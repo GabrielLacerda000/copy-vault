@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/snippet.dart';
 import '../providers/snippet_providers.dart';
+import '../utils/clipboard_utils.dart';
 import '../widgets/snippet_card.dart';
 import 'create_screen.dart';
+import 'detail_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -28,7 +28,12 @@ class HomeScreen extends ConsumerWidget {
             itemCount: items.length,
             itemBuilder: (context, index) => SnippetCard(
               snippet: items[index],
-              onCopy: () => _copySnippet(context, items[index]),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => DetailScreen(snippet: items[index]),
+                ),
+              ),
+              onCopy: () => copySnippetContent(context, items[index]),
             ),
           );
         },
@@ -41,14 +46,6 @@ class HomeScreen extends ConsumerWidget {
         },
         child: const Icon(Icons.add),
       ),
-    );
-  }
-
-  Future<void> _copySnippet(BuildContext context, Snippet snippet) async {
-    await Clipboard.setData(ClipboardData(text: snippet.content));
-    if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Copied successfully')),
     );
   }
 }

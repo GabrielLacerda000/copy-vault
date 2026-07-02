@@ -10,10 +10,10 @@ Tapping a snippet card on the Home screen (anywhere other than the copy button) 
 
 ## Acceptance criteria
 
-- [ ] Tapping a snippet card (not the copy button) navigates to the Detail screen for that snippet
-- [ ] Detail screen displays the full title and full content
-- [ ] Detail screen has a copy action that copies the content and shows feedback, same as the list copy button
-- [ ] Detail screen has Edit and Delete actions visible (wired up in later slices)
+- [x] Tapping a snippet card (not the copy button) navigates to the Detail screen for that snippet
+- [x] Detail screen displays the full title and full content
+- [x] Detail screen has a copy action that copies the content and shows feedback, same as the list copy button
+- [x] Detail screen has Edit and Delete actions visible (wired up in later slices)
 
 ## Blocked by
 
