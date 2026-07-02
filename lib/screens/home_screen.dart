@@ -12,31 +12,55 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final snippets = ref.watch(snippetListProvider);
+    final snippets = ref.watch(filteredSnippetListProvider);
+    final query = ref.watch(searchQueryProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('CopyVault')),
-      body: snippets.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(child: Text('Error: $error')),
-        data: (items) {
-          if (items.isEmpty) {
-            return const Center(child: Text('No snippets yet'));
-          }
-          return ListView.builder(
+      body: Column(
+        children: [
+          Padding(
             padding: const EdgeInsets.all(8),
-            itemCount: items.length,
-            itemBuilder: (context, index) => SnippetCard(
-              snippet: items[index],
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => DetailScreen(snippet: items[index]),
-                ),
+            child: TextField(
+              decoration: const InputDecoration(
+                hintText: 'Search snippets',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
               ),
-              onCopy: () => copySnippetContent(context, items[index]),
+              onChanged: (value) =>
+                  ref.read(searchQueryProvider.notifier).state = value,
             ),
-          );
-        },
+          ),
+          Expanded(
+            child: snippets.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stackTrace) =>
+                  Center(child: Text('Error: $error')),
+              data: (items) {
+                if (items.isEmpty) {
+                  return Center(
+                    child: Text(
+                      query.isEmpty ? 'No snippets yet' : 'No matches found',
+                    ),
+                  );
+                }
+                return ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) => SnippetCard(
+                    snippet: items[index],
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => DetailScreen(snippet: items[index]),
+                      ),
+                    ),
+                    onCopy: () => copySnippetContent(context, items[index]),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

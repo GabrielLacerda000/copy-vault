@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 import '../models/snippet.dart';
 import '../repositories/snippet_repository.dart';
@@ -44,3 +45,22 @@ final snippetListProvider =
     AsyncNotifierProvider<SnippetListNotifier, List<Snippet>>(
   SnippetListNotifier.new,
 );
+
+final searchQueryProvider = StateProvider<String>((ref) => '');
+
+final filteredSnippetListProvider = Provider<AsyncValue<List<Snippet>>>((ref) {
+  final query = ref.watch(searchQueryProvider).trim().toLowerCase();
+  final snippets = ref.watch(snippetListProvider);
+
+  if (query.isEmpty) {
+    return snippets;
+  }
+
+  return snippets.whenData(
+    (items) => items
+        .where((snippet) =>
+            snippet.title.toLowerCase().contains(query) ||
+            snippet.content.toLowerCase().contains(query))
+        .toList(),
+  );
+});
