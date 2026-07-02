@@ -1,5 +1,5 @@
-name: Copy Vault
-description: "A new Flutter project."
+name: copy_vault
+description: "quick copy vault app"
 publish_to: 'none'
 version: 0.1.0+1
 
