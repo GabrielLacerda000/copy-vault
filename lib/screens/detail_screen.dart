@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/snippet.dart';
 import '../providers/snippet_providers.dart';
+import '../theme/app_colors.dart';
 import '../utils/clipboard_utils.dart';
 import 'edit_screen.dart';
 
@@ -75,6 +76,7 @@ class DetailScreen extends ConsumerWidget {
             child: const Text('Cancel'),
           ),
           TextButton(
+            style: TextButton.styleFrom(foregroundColor: AppColors.danger),
             onPressed: () => Navigator.of(context).pop(true),
             child: const Text('Delete'),
           ),
