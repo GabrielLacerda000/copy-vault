@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/snippet.dart';
+import '../providers/snippet_providers.dart';
 import '../utils/clipboard_utils.dart';
+import 'edit_screen.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends ConsumerWidget {
   const DetailScreen({super.key, required this.snippet});
 
   final Snippet snippet;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final snippets = ref.watch(snippetListProvider).value;
+    final current = snippets?.firstWhere(
+          (s) => s.id == snippet.id,
+          orElse: () => snippet,
+        ) ??
+        snippet;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Snippet'),
@@ -17,12 +27,14 @@ class DetailScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.copy),
             tooltip: 'Copy',
-            onPressed: () => copySnippetContent(context, snippet),
+            onPressed: () => copySnippetContent(context, current),
           ),
           IconButton(
             icon: const Icon(Icons.edit),
             tooltip: 'Edit',
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => EditScreen(snippet: current)),
+            ),
           ),
           IconButton(
             icon: const Icon(Icons.delete),
@@ -37,11 +49,11 @@ class DetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              snippet.title,
+              current.title,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 16),
-            SelectableText(snippet.content),
+            SelectableText(current.content),
           ],
         ),
       ),

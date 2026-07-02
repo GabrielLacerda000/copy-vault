@@ -2,7 +2,7 @@
 
 ## Parent
 
-Source: PRD.md (CopyFast MVP)
+Source: PRD.md (CopyVault MVP)
 
 ## What to build
 

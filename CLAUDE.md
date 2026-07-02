@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-CopyFast (package name `copy_vault`): a minimal, offline-only Android Flutter app for storing reusable text snippets and copying them to the clipboard in as few taps as possible. Full product spec is in `PRD.md` — read it before implementing any feature, especially the **Excluded Features** and **Main Product Principle** sections, since scope creep is explicitly against the product philosophy (no categories, tags, cloud sync, auth, themes, etc.).
+CopyVault (package name `copy_vault`): a minimal, offline-only Android Flutter app for storing reusable text snippets and copying them to the clipboard in as few taps as possible. Full product spec is in `PRD.md` — read it before implementing any feature, especially the **Excluded Features** and **Main Product Principle** sections, since scope creep is explicitly against the product philosophy (no categories, tags, cloud sync, auth, themes, etc.).
 
 Planned MVP work is broken into vertical-slice issues in `issues/01`–`06` (dependency order: `01-create-and-list-snippets` is the foundation; `02` copy, `03` detail, `06` search depend on it; `04` edit and `05` delete depend on `03`).
 

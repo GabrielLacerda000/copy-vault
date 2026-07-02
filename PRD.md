@@ -2,13 +2,13 @@
 
 ## Product Name
 
-CopyFast
+CopyVault
 
 ---
 
 # Product Overview
 
-CopyFast is a minimal Android application designed to store reusable text snippets and allow users to copy them quickly.
+CopyVault is a minimal Android application designed to store reusable text snippets and allow users to copy them quickly.
 
 The application exists to eliminate repetitive typing and repeated searching for commonly used information.
 

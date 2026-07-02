@@ -13,6 +13,16 @@ class SnippetRepository {
     return snippet.copyWith(id: id);
   }
 
+  Future<void> update(Snippet snippet) async {
+    final db = await _databaseHelper.database;
+    await db.update(
+      'snippets',
+      snippet.toMap(),
+      where: 'id = ?',
+      whereArgs: [snippet.id],
+    );
+  }
+
   Future<List<Snippet>> getAll() async {
     final db = await _databaseHelper.database;
     final rows = await db.query('snippets', orderBy: 'created_at DESC');

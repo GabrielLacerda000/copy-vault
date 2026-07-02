@@ -19,6 +19,14 @@ class FakeSnippetRepository implements SnippetRepository {
   }
 
   @override
+  Future<void> update(Snippet snippet) async {
+    final index = _snippets.indexWhere((s) => s.id == snippet.id);
+    if (index != -1) {
+      _snippets[index] = snippet;
+    }
+  }
+
+  @override
   Future<List<Snippet>> getAll() async {
     final sorted = List<Snippet>.from(_snippets)
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));

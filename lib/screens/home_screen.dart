@@ -15,7 +15,7 @@ class HomeScreen extends ConsumerWidget {
     final snippets = ref.watch(snippetListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('CopyFast')),
+      appBar: AppBar(title: const Text('CopyVault')),
       body: snippets.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => Center(child: Text('Error: $error')),
