@@ -40,6 +40,9 @@ The app solves this by centralizing reusable text and making copy actions immedi
 
 ---
 
+## tecnologies
+sqflite
+
 # Main Goal
 
 Store reusable text.
