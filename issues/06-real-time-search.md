@@ -10,11 +10,11 @@ A search bar at the top of the Home screen filters the visible snippet list in r
 
 ## Acceptance criteria
 
-- [ ] Search bar is visible at the top of the Home screen
-- [ ] List filters as the user types, with no submit/search button
-- [ ] Matches are found in both title and content
-- [ ] Clearing the search bar restores the full list (newest first)
-- [ ] Filtering remains fast/smooth as the list grows
+- [x] Search bar is visible at the top of the Home screen
+- [x] List filters as the user types, with no submit/search button
+- [x] Matches are found in both title and content
+- [x] Clearing the search bar restores the full list (newest first)
+- [x] Filtering remains fast/smooth as the list grows
 
 ## Blocked by
 
