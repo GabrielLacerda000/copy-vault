@@ -10,11 +10,11 @@ The Delete action on the Detail screen removes the snippet from local storage, a
 
 ## Acceptance criteria
 
-- [ ] Delete action on Detail screen shows a confirmation dialog before deleting
-- [ ] Confirmation dialog reads "Delete this text?" with Cancel and Delete options
-- [ ] Cancel dismisses the dialog with no changes
-- [ ] Confirming delete removes the snippet from the local database and returns to Home screen
-- [ ] Deleted snippet no longer appears in the Home list
+- [x] Delete action on Detail screen shows a confirmation dialog before deleting
+- [x] Confirmation dialog reads "Delete this text?" with Cancel and Delete options
+- [x] Cancel dismisses the dialog with no changes
+- [x] Confirming delete removes the snippet from the local database and returns to Home screen
+- [x] Deleted snippet no longer appears in the Home list
 
 ## Blocked by
 

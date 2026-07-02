@@ -32,6 +32,11 @@ class FakeSnippetRepository implements SnippetRepository {
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
     return sorted;
   }
+
+  @override
+  Future<void> delete(int id) async {
+    _snippets.removeWhere((s) => s.id == id);
+  }
 }
 
 void main() {

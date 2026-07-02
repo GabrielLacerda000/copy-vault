@@ -32,6 +32,12 @@ class SnippetListNotifier extends AsyncNotifier<List<Snippet>> {
     await repository.update(updated);
     state = await AsyncValue.guard(() => repository.getAll());
   }
+
+  Future<void> deleteSnippet(int id) async {
+    final repository = ref.read(snippetRepositoryProvider);
+    await repository.delete(id);
+    state = await AsyncValue.guard(() => repository.getAll());
+  }
 }
 
 final snippetListProvider =

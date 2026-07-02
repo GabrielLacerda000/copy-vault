@@ -39,7 +39,7 @@ class DetailScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.delete),
             tooltip: 'Delete',
-            onPressed: () {},
+            onPressed: () => _confirmDelete(context, ref, current),
           ),
         ],
       ),
@@ -58,5 +58,35 @@ class DetailScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _confirmDelete(
+    BuildContext context,
+    WidgetRef ref,
+    Snippet current,
+  ) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete this text?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    await ref.read(snippetListProvider.notifier).deleteSnippet(current.id!);
+
+    if (!context.mounted) return;
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }

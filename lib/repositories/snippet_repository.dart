@@ -28,4 +28,9 @@ class SnippetRepository {
     final rows = await db.query('snippets', orderBy: 'created_at DESC');
     return rows.map(Snippet.fromMap).toList();
   }
+
+  Future<void> delete(int id) async {
+    final db = await _databaseHelper.database;
+    await db.delete('snippets', where: 'id = ?', whereArgs: [id]);
+  }
 }

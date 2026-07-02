@@ -9,6 +9,7 @@ import 'package:copy_vault/providers/snippet_providers.dart';
 import 'package:copy_vault/repositories/snippet_repository.dart';
 import 'package:copy_vault/screens/detail_screen.dart';
 import 'package:copy_vault/screens/edit_screen.dart';
+import 'package:copy_vault/screens/home_screen.dart';
 
 class FakeSnippetRepository implements SnippetRepository {
   FakeSnippetRepository({List<Snippet> seed = const []})
@@ -37,6 +38,11 @@ class FakeSnippetRepository implements SnippetRepository {
     final sorted = List<Snippet>.from(_snippets)
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
     return sorted;
+  }
+
+  @override
+  Future<void> delete(int id) async {
+    _snippets.removeWhere((s) => s.id == id);
   }
 }
 
@@ -237,5 +243,77 @@ void main() {
     final saved = (await repository.getAll()).single;
     expect(saved.createdAt, now);
     expect(saved.updatedAt, greaterThan(now));
+  });
+
+  testWidgets(
+      'cancelling delete dismisses the dialog and keeps the snippet',
+      (tester) async {
+    final repository = FakeSnippetRepository(
+      seed: [
+        Snippet(
+          id: 1,
+          title: _title,
+          content: _content,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          updatedAt: DateTime.now().millisecondsSinceEpoch,
+        ),
+      ],
+    );
+    await _pumpHomeWithOneSnippet(tester, repository: repository);
+
+    await tester.tap(find.text(_title).first);
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.descendant(
+        of: find.byType(DetailScreen),
+        matching: find.byIcon(Icons.delete),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Delete this text?'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(TextButton, 'Cancel'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(DetailScreen), findsOneWidget);
+    expect((await repository.getAll()).length, 1);
+  });
+
+  testWidgets(
+      'confirming delete removes the snippet and returns to Home',
+      (tester) async {
+    final repository = FakeSnippetRepository(
+      seed: [
+        Snippet(
+          id: 1,
+          title: _title,
+          content: _content,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          updatedAt: DateTime.now().millisecondsSinceEpoch,
+        ),
+      ],
+    );
+    await _pumpHomeWithOneSnippet(tester, repository: repository);
+
+    await tester.tap(find.text(_title).first);
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.descendant(
+        of: find.byType(DetailScreen),
+        matching: find.byIcon(Icons.delete),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(TextButton, 'Delete'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(DetailScreen), findsNothing);
+    expect(find.byType(HomeScreen), findsOneWidget);
+    expect(find.text(_title), findsNothing);
+    expect((await repository.getAll()), isEmpty);
   });
 }
