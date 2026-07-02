@@ -31,5 +31,6 @@ flutter build apk            # build release APK (Android-only target per PRD)
 - **Delete** requires a confirm dialog ("Delete this text?" / Cancel / Delete).
 - List is always ordered newest-first.
 
-## tecnologies
+## Code
 - use sqflite
+- using riverpod for state management

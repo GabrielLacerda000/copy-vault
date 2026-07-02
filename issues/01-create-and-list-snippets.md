@@ -17,12 +17,12 @@ Covers:
 
 ## Acceptance criteria
 
-- [ ] Snippet entity persists to a local database (id, title, content, created_at, updated_at)
-- [ ] Create screen requires both title and content before saving
-- [ ] Saving a snippet returns to Home screen and the new snippet appears at the top of the list
-- [ ] Home screen lists all saved snippets, newest first, each showing title + preview
-- [ ] Floating action button navigates to Create screen
-- [ ] Works fully offline
+- [x] Snippet entity persists to a local database (id, title, content, created_at, updated_at)
+- [x] Create screen requires both title and content before saving
+- [x] Saving a snippet returns to Home screen and the new snippet appears at the top of the list
+- [x] Home screen lists all saved snippets, newest first, each showing title + preview
+- [x] Floating action button navigates to Create screen
+- [x] Works fully offline
 
 ## Blocked by
 

@@ -10,10 +10,10 @@ One-tap copy from the Home screen. Tapping the copy button on a snippet card cop
 
 ## Acceptance criteria
 
-- [ ] Each item on the Home screen list has a copy button
-- [ ] Tapping the copy button copies the snippet's full content to the clipboard in a single tap
-- [ ] A small feedback message appears after copying (e.g. "Copied successfully")
-- [ ] Copying does not navigate away from the Home screen
+- [x] Tapping the copy button on a snippet card copies its full content to the device clipboard
+- [x] Tapping the copy button copies the snippet's full content to the clipboard in a single tap
+- [x] A small feedback message appears after copying (e.g. "Copied successfully")
+- [x] Copying does not navigate away from the Home screen
 
 ## Blocked by
 
