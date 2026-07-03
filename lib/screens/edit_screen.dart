@@ -30,14 +30,21 @@ class _EditScreenState extends ConsumerState<EditScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isSaving = true);
-    await ref.read(snippetListProvider.notifier).updateSnippet(
-          widget.snippet,
-          _titleController.text.trim(),
-          _contentController.text.trim(),
-        );
+    
+    try {
+      await ref.read(snippetListProvider.notifier).updateSnippet(
+            widget.snippet,
+            _titleController.text.trim(),
+            _contentController.text.trim(),
+          );
 
-    if (!mounted) return;
-    Navigator.of(context).pop();
+      if (!mounted) return;
+      Navigator.of(context).pop();
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _isSaving = false);
+      // Opcional: Adicionar um ScaffoldMessenger para mostrar o erro
+    }
   }
 
   @override
@@ -63,12 +70,23 @@ class _EditScreenState extends ConsumerState<EditScreen> {
               validator: (value) =>
                   (value == null || value.trim().isEmpty) ? 'Content is required' : null,
             ),
-            const SizedBox(height: 24),
-            FilledButton(
-              onPressed: _isSaving ? null : _save,
-              child: const Text('Save'),
-            ),
           ],
+        ),
+      ),
+      // --- Botão fixado no rodapé da tela de edição ---
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: FilledButton(
+            onPressed: _isSaving ? null : _save,
+            child: _isSaving 
+                ? const SizedBox(
+                    height: 20, 
+                    width: 20, 
+                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)
+                  )
+                : const Text('Save'),
+          ),
         ),
       ),
     );
